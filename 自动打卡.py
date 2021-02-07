@@ -254,7 +254,11 @@ try:
                 smtp_obj.connect(mail_server, mail_port)
                 smtp_obj.login(sender, sender_password)
                 smtp_obj.sendmail(sender, [receivers], message.as_string())
+                li=999999
                 break
+        if li==999999:
+            break
+            browser.close()
         time.sleep(1)
         browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[14]/div/div[2]/div/input').send_keys('36.5')
         browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[16]/button').click()
