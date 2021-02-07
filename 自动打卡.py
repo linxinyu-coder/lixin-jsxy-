@@ -172,64 +172,94 @@ try:
       '4168': '3',
       '1694':'t',
       }
-    opt = webdriver.ChromeOptions()
-    opt.add_argument('--headless')
-    opt.add_experimental_option('w3c',  False)
-    browser = webdriver.Chrome(options=opt)
-    browser.get('http://222.190.105.10:8455/login')
-    doc = browser.find_element_by_xpath('/html/body/div/div/div[4]/label')
-    TouchActions(browser).tap(doc).perform()
-    time.sleep(10)
-    browser.find_element_by_xpath('/html/body/div/div/button').click()
-    browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[1]/div[2]/div/input').send_keys('js20180316')
-    browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[2]/div[2]/div/input').send_keys('123456')
-    time.sleep(1)
-    jsxyurl='http://222.190.105.10:8455/login'
-    n=0
-    while browser.current_url==jsxyurl:
-        q=0
-        w=0
-        e=0
-        r=0
-        a1=0
-        a2=0
-        a3=0
-        a4=0
-        for i in range(1,7):
-            name = browser.find_element_by_css_selector("#app > div > div.yd-flexbox-item.logo-content.yd-flexbox-item-center > div.yd-cell-box > div > div:nth-child(3) > div.yd-cell-right > div > svg > path:nth-child("+str(i)+")")
-            key=name.get_attribute('d')
-            location=name.location
-            location=location['x']
-            lenkey=len(key)
-            
-            if lenkey<100:
-                continue
-           # print('位置',location)
-            try:
-                lin=a[str(len(key))]
-            except:
-                lin=0
-            #print('元素',lin)
-           # print('长度值',lenkey)
-            if location>q and location>w and location>e and location>r:
-                r,e,w,q=location,r,e,w
-                a4,a3,a2,a1=lin,a4,a3,a2
-            elif location>q and location>w and location>e and location<r:
-                e,w,q=location,e,w
-                a3,a2,a1=lin,a3,a2
-            elif location>q and location>w and location<e and location<r:
-                w,q=location,w
-                a2,a1=lin,a2
-            else:
-                q=location
-                a1=lin
-        A=str(a1)+str(a2)+str(a3)+str(a4)
-        browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[3]/div[2]/input').send_keys(A)
-        time.sleep(2)
-        browser.find_element_by_xpath('/html/body/div/div/div[1]/div[4]/button').click()
+    ci=0
+    while True:
+        opt = webdriver.ChromeOptions()
+        opt.add_argument('--headless')
+        opt.add_experimental_option('w3c',  False)
+        browser = webdriver.Chrome(options=opt)
+        browser.get('http://222.190.105.10:8455')
+        doc = browser.find_element_by_xpath('/html/body/div/div/div[4]/label')
+        TouchActions(browser).tap(doc).perform()
+        time.sleep(10)
+        browser.find_element_by_xpath('/html/body/div/div/button').click()
+        browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[1]/div[2]/div/input').send_keys('js20180316')
+        browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[2]/div[2]/div/input').send_keys('123456')
         time.sleep(1)
-        n=n+1
-        if n>40:
+        jsxyurl='http://222.190.105.10:8455/login'
+        n=0
+        while browser.current_url==jsxyurl:
+            q=0
+            w=0
+            e=0
+            r=0
+            a1=0
+            a2=0
+            a3=0
+            a4=0
+            for i in range(1,7):
+                name = browser.find_element_by_css_selector("#app > div > div.yd-flexbox-item.logo-content.yd-flexbox-item-center > div.yd-cell-box > div > div:nth-child(3) > div.yd-cell-right > div > svg > path:nth-child("+str(i)+")")
+                key=name.get_attribute('d')
+                location=name.location
+                location=location['x']
+                lenkey=len(key)
+                
+                if lenkey<100:
+                    continue
+               # print('位置',location)
+                try:
+                    lin=a[str(len(key))]
+                except:
+                    lin=0
+                #print('元素',lin)
+               # print('长度值',lenkey)
+                if location>q and location>w and location>e and location>r:
+                    r,e,w,q=location,r,e,w
+                    a4,a3,a2,a1=lin,a4,a3,a2
+                elif location>q and location>w and location>e and location<r:
+                    e,w,q=location,e,w
+                    a3,a2,a1=lin,a3,a2
+                elif location>q and location>w and location<e and location<r:
+                    w,q=location,w
+                    a2,a1=lin,a2
+                else:
+                    q=location
+                    a1=lin
+            A=str(a1)+str(a2)+str(a3)+str(a4)
+            browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[3]/div[2]/input').send_keys(A)
+            time.sleep(2)
+            browser.find_element_by_xpath('/html/body/div/div/div[1]/div[4]/button').click()
+            time.sleep(1)
+            n=n+1
+            if n>40:
+                
+                mail_server = "smtp.126.com"
+                mail_port = 25
+                sender = "linxinyu0110@126.com"
+                sender_password = "ISDUSHZOCHKHIJIJ"  # 授权码
+                receivers = "1017270114@qq.com"
+                
+                
+                message = MIMEText('错误原因:验证码错误次数过多', 'plain', 'utf-8')
+                message['From'] = sender
+                message['To'] = receivers
+                
+                send_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+                subject = '打卡失败' + send_time 
+                message['Subject'] = subject
+                
+                
+                
+                smtp_obj = smtplib.SMTP()
+                smtp_obj.connect(mail_server, mail_port)
+                smtp_obj.login(sender, sender_password)
+                smtp_obj.sendmail(sender, [receivers], message.as_string())
+                break
+        time.sleep(1)
+        browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[14]/div/div[2]/div/input').send_keys('36.5')
+        browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[16]/button').click()
+        time.sleep(2)
+        if browser.current_url!='http://222.190.105.10:8455/student/perday':
             
             mail_server = "smtp.126.com"
             mail_port = 25
@@ -238,12 +268,12 @@ try:
             receivers = "1017270114@qq.com"
             
             
-            message = MIMEText('错误原因:验证码错误次数过多', 'plain', 'utf-8')
+            message = MIMEText('打卡成功', 'plain', 'utf-8')
             message['From'] = sender
             message['To'] = receivers
             
             send_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-            subject = '打卡失败' + send_time 
+            subject = '打卡成功' + send_time 
             message['Subject'] = subject
             
             
@@ -252,32 +282,38 @@ try:
             smtp_obj.connect(mail_server, mail_port)
             smtp_obj.login(sender, sender_password)
             smtp_obj.sendmail(sender, [receivers], message.as_string())
+            browser.close()
             break
-    time.sleep(1)
-    browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[14]/div/div[2]/div/input').send_keys('36.5')
-    browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[16]/button').click()
-    mail_server = "smtp.126.com"
-    mail_port = 25
-    sender = "linxinyu0110@126.com"
-    sender_password = "ISDUSHZOCHKHIJIJ"  # 授权码
-    receivers = "1017270114@qq.com"
-    
-    
-    message = MIMEText('打卡成功', 'plain', 'utf-8')
-    message['From'] = sender
-    message['To'] = receivers
-    
-    send_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-    subject = '打卡成功' + send_time 
-    message['Subject'] = subject
-    
-    
-    
-    smtp_obj = smtplib.SMTP()
-    smtp_obj.connect(mail_server, mail_port)
-    smtp_obj.login(sender, sender_password)
-    smtp_obj.sendmail(sender, [receivers], message.as_string())
-    browser.close()
+        else:
+            browser.close()
+            ci=ci+1
+            if ci>4:
+                mail_server = "smtp.126.com"
+                mail_port = 25
+                sender = "linxinyu0110@126.com"
+                sender_password = "ISDUSHZOCHKHIJIJ"  # 授权码
+                receivers = "1017270114@qq.com"
+                
+                
+                message = MIMEText('打卡失败:页面元素错误', 'plain', 'utf-8')
+                message['From'] = sender
+                message['To'] = receivers
+                
+                send_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+                subject = '打卡失败' + send_time 
+                message['Subject'] = subject
+                
+                
+                
+                smtp_obj = smtplib.SMTP()
+                smtp_obj.connect(mail_server, mail_port)
+                smtp_obj.login(sender, sender_password)
+                smtp_obj.sendmail(sender, [receivers], message.as_string())
+                browser.close()
+                break
+            
+
+        
 except:
     mail_server = "smtp.126.com"
     mail_port = 25
