@@ -173,6 +173,7 @@ try:
       '1694':'t',
       }
     ci=0
+    li=0
     while True:
         opt = webdriver.ChromeOptions()
         opt.add_argument('--headless')
