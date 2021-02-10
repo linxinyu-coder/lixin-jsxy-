@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Created on Thu Feb 11 00:50:08 2021
+
+@author: lin
+"""
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
 Created on Thu Feb  4 15:31:30 2021
 
 @author: lin
@@ -10,7 +18,8 @@ from email.mime.text import MIMEText
 from selenium import webdriver
 import time
 from selenium.webdriver.common.touch_actions import TouchActions
-try:   
+M=0
+try:
     a={
       '986': 'I', 'l'
       '998': '1',
@@ -184,6 +193,7 @@ try:
         TouchActions(browser).tap(doc).perform()
         time.sleep(10)
         browser.find_element_by_xpath('/html/body/div/div/button').click()
+        M=M+1#错误原因1:网页已打开
         browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[1]/div[2]/div/input').send_keys('js20180316')
         browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[2]/div[2]/div/input').send_keys('123456')
         time.sleep(1)
@@ -230,7 +240,7 @@ try:
             browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[3]/div[2]/input').send_keys(A)
             time.sleep(2)
             browser.find_element_by_xpath('/html/body/div/div/div[1]/div[4]/button').click()
-            time.sleep(1)
+            time.sleep(5)
             n=n+1
             if n>40:
                 
@@ -260,10 +270,13 @@ try:
         if li==999999:
             break
             browser.close()
+        M=M+1#错误原因2:网页已登陆
         time.sleep(1)
         browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[14]/div/div[2]/div/input').send_keys('36.5')
+        M=M+1#错误原因3:温度已填写
         browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[16]/button').click()
-        time.sleep(2)
+        M=M+1#错误原因4:按钮已按
+        time.sleep(5)
         if browser.current_url!='http://222.190.105.10:8455/student/perday':
             
             mail_server = "smtp.126.com"
@@ -316,9 +329,6 @@ try:
                 smtp_obj.sendmail(sender, [receivers], message.as_string())
                 browser.close()
                 break
-            
-
-        
 except:
     mail_server = "smtp.126.com"
     mail_port = 25
@@ -326,8 +336,8 @@ except:
     sender_password = "ISDUSHZOCHKHIJIJ"  # 授权码
     receivers = "1017270114@qq.com"
     
-    
-    message = MIMEText('错误原因:程序出错', 'plain', 'utf-8')
+    M=str(M)
+    message = MIMEText('打卡失败:错误原因',M, 'plain', 'utf-8')
     message['From'] = sender
     message['To'] = receivers
     
@@ -341,4 +351,8 @@ except:
     smtp_obj.connect(mail_server, mail_port)
     smtp_obj.login(sender, sender_password)
     smtp_obj.sendmail(sender, [receivers], message.as_string())
+    browser.close()
+
     
+
+
