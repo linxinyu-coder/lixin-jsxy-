@@ -337,7 +337,8 @@ except:
     receivers = "1017270114@qq.com"
     
     M=str(M)
-    message = MIMEText('打卡失败:错误原因',M, 'plain', 'utf-8')
+    M1='打卡失败:错误原因'+M
+    message = MIMEText(M1, 'plain', 'utf-8')
     message['From'] = sender
     message['To'] = receivers
     
