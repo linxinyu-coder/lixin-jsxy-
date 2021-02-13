@@ -3,9 +3,7 @@
 
 name: jsxy
 
-on: 
-  schedule:
-    - cron: " 0 20 * * 0-6"
+on: [push]
 
 jobs:
   start:
