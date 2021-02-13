@@ -188,10 +188,11 @@ try:
         opt.add_argument('--headless')
         opt.add_experimental_option('w3c',  False)
         browser = webdriver.Chrome(options=opt)
-        browser.get('http://222.190.105.10:8455')
+        browser.get('http://222.190.105.10:8455/')
+        time.sleep(5)
         doc = browser.find_element_by_xpath('/html/body/div/div/div[4]/label')
         TouchActions(browser).tap(doc).perform()
-        time.sleep(10)
+        time.sleep(15)
         browser.find_element_by_xpath('/html/body/div/div/button').click()
         M=M+1#错误原因1:网页已打开
         browser.find_element_by_xpath('/html/body/div/div/div[1]/div[2]/div/div[1]/div[2]/div/input').send_keys('js20180316')
