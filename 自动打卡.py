@@ -1,27 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Feb 11 00:50:08 2021
+Created on Sun Feb 14 10:40:54 2021
 
 @author: lin
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb  4 15:31:30 2021
 
-@author: lin
-"""
 import smtplib
 from email.mime.text import MIMEText
 from selenium import webdriver
 import time
 from selenium.webdriver.common.touch_actions import TouchActions
-M=0
+
 try:
     a={
-      '986': 'I', 'l'
+      #'986': 'I', 'l'
       '998': '1',
       '1068': 'l',
       '1081': '1',
@@ -184,6 +178,7 @@ try:
     ci=0
     li=0
     while True:
+        M=0
         opt = webdriver.ChromeOptions()
         opt.add_argument('--headless')
         opt.add_experimental_option('w3c',  False)
@@ -304,7 +299,7 @@ try:
             browser.close()
             break
         else:
-            browser.close()
+            browser.quit()
             ci=ci+1
             if ci>4:
                 mail_server = "smtp.126.com"
@@ -353,7 +348,7 @@ except:
     smtp_obj.connect(mail_server, mail_port)
     smtp_obj.login(sender, sender_password)
     smtp_obj.sendmail(sender, [receivers], message.as_string())
-    browser.close()
+    browser.quit()
 
     
 
