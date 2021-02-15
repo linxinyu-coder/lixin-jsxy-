@@ -176,13 +176,13 @@ try:
       '1694':'t',
       }
     ci=0
-    li=0
+    li=0        
+    opt = webdriver.ChromeOptions()
+    opt.add_argument('--headless')
+    opt.add_experimental_option('w3c',  False)
+    browser = webdriver.Chrome(options=opt)
     while True:
         M=0
-        opt = webdriver.ChromeOptions()
-        opt.add_argument('--headless')
-        opt.add_experimental_option('w3c',  False)
-        browser = webdriver.Chrome(options=opt)
         browser.get('http://222.190.105.10:8455/')
         time.sleep(5)
         doc = browser.find_element_by_xpath('/html/body/div/div/div[4]/label')
@@ -299,7 +299,7 @@ try:
             browser.close()
             break
         else:
-            browser.quit()
+            browser.close()
             ci=ci+1
             if ci>4:
                 mail_server = "smtp.126.com"
@@ -323,7 +323,7 @@ try:
                 smtp_obj.connect(mail_server, mail_port)
                 smtp_obj.login(sender, sender_password)
                 smtp_obj.sendmail(sender, [receivers], message.as_string())
-                browser.close()
+                browser.quit()
                 break
 except:
     mail_server = "smtp.126.com"
